@@ -138,10 +138,15 @@ namespace BMDExporter.Materials
             if (source.HasTextureDiffuse)
             {
                 string path = source.TextureDiffuse.FilePath;
-                if (!Path.IsPathRooted(path))
+                string texPath = "";
+                if (!Path.IsPathRooted(Path.GetDirectoryName(modelPath)))
                 {
                     string modelDir = Path.GetDirectoryName(modelPath);
-                    string texPath = string.Format("{0}\\{1}", modelDir, path);
+                    if (modelDir.Length >= 0)
+                    {
+                        texPath = string.Format("{0}\\{1}", modelDir, path);
+                    }
+                    texPath = string.Format("{0}", path);
 
                     if (File.Exists(texPath))
                         path = texPath;
